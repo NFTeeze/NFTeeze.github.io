@@ -6,6 +6,7 @@ import Header from "components/headers/light.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustrationFullForm.js";
 import ContactDetails from "components/cards/ThreeColContactDetails.js";
+import Contact from "../pages/Contact.js";
 
 const Address = tw.span`leading-relaxed`;
 const AddressLine = tw.span`block`;
@@ -17,6 +18,7 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <ContactUsForm />
+      <Contact />
       <ContactDetails
         cards={[
           {
