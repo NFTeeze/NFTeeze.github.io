@@ -4,7 +4,8 @@ import tw from "twin.macro";
 /* framer-motion and useInView here are used to animate the sections in when we reach them in the viewport
  */
 import { motion } from "framer-motion";
-import useInView from "use-in-view";
+// import useInView from "use-in-view";
+import AnimationThing from "../animationThing.js";
 
 const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 p-8 overflow-hidden`;
 function AnimationReveal({ disabled, children }) {
@@ -26,7 +27,7 @@ function AnimationReveal({ disabled, children }) {
 }
 
 function AnimatedSlideInComponent({ direction = "left", offset = 30, children }) {
-  const [ref, inView] = useInView(30);
+  const [ref, inView] = AnimationThing(30);
 
   const x = { target: "0%" };
 
