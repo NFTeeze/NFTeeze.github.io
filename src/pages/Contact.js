@@ -34,12 +34,14 @@ class Contact extends Component {
             });
             break;
          case "subject":
-            this.setState({ 
-               subject: event.target.value });
+            this.setState({
+               subject: event.target.value
+            });
             break;
          case "message":
-            this.setState({ 
-               message: event.target.value });
+            this.setState({
+               message: event.target.value
+            });
             break;
          default: break;
 
@@ -73,7 +75,7 @@ class Contact extends Component {
       // var template_id = "template_rtgo442n"; //contactme
       var template_id = "template_xps75xa"; //contactme
 
-      emailjs.send(service_id, template_id, msg, "user_BuRzG4bvF9l62m2iYRu6Q").then((response) => {
+      emailjs.sendForm(service_id, template_id, "#contactForm", "user_BuRzG4bvF9l62m2iYRu6Q").then((response) => {
          console.log('SUCCESS!', response.status, response.text);
          console.log(response);
          alert("Email Sent!");
@@ -98,7 +100,7 @@ class Contact extends Component {
    render() {
 
       if (this.props.data) {
-         
+
          var name = this.props.data.name;
          var street = this.props.data.address.street;
          var city = this.props.data.address.city;
@@ -110,7 +112,7 @@ class Contact extends Component {
       }
 
       return (
-         <section id="contact" style={{backgroundColor: "red"}}>
+         <section id="contact" style={{ backgroundColor: "red" }}>
 
             <div className="row section-head">
 
@@ -134,7 +136,7 @@ class Contact extends Component {
                   <form onSubmit={this.handleSubmit} id="contactForm" name="contactForm">
                      <fieldset>
                         <div>
-                           <input type='hidden' value='something'/>
+                           <input type='hidden' name="contactName" value='something' />
                            <label htmlFor="contactName">Name <span className="required">*</span></label>
                            <input pattern=".{3,}" value={this.state.name} type="text" size="35" id="contactName" name="contactName" onChange={(e) => {
                               this.handleChange(e, "name");
@@ -142,65 +144,72 @@ class Contact extends Component {
                         </div>
 
                         <div>
-                           <label htmlFor="contactEmail">Email <span className="required">*</span></label>
-                           <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={this.state.email} type="email"  size="35" id="contactEmail" name="contactEmail" onChange={(e) => {
+                           <label htmlFor="contactEmail" name="contactEmail">Email <span className="required">*</span></label>
+                           <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={this.state.email} type="email" size="35" id="contactEmail" name="contactEmail" onChange={(e) => {
                               this.handleChange(e, "email");
                            }} />
                         </div>
 
                         <div>
-                           <label htmlFor="contactSubject">Subject <span className="required">*</span></label>
+                           <label htmlFor="contactSubject" name="contactSubject">Subject <span className="required">*</span></label>
                            <input pattern=".{3,}" value={this.state.value} type="text" value={this.state.subject} size="35" id="contactSubject" name="contactSubject" onChange={(e) => {
                               this.handleChange(e, "subject");
                            }} />
                         </div>
 
                         <div>
-                           <label htmlFor="contactMessage">Message <span className="required">*</span></label>
+                           <label htmlFor="contactMessage" name="contactMessage">Message <span className="required">*</span></label>
                            <textarea pattern=".{3,}" value={this.state.message} cols="50" rows="15" id="contactMessage" name="contactMessage" onChange={(e) => {
                               this.handleChange(e, "message");
                            }}></textarea>
                         </div>
 
-
                         <div>
-                           {/* <button onSubmit={this.handleSubmit} className="submit">Submit</button> */}
-
-                           {/* <div className="g-recaptcha-class" class="g-recaptcha" data-sitekey="6LfCXL8UAAAAAN17cfWjv6Z3iGEIJZXmQ_Xs1LsK"></div> */}
-                           <div id="captcha-container" className="captcha-container">
-                              {gCaptcha}
-                           </div>
-
-                           <br />
-                           <input type="submit" value="Submit" />
-                           <span id="image-loader">
-                              <img alt="" src="images/loader.gif" />
-                           </span>
+                        <label>Attach file:</label>
+                           <input name="contactImage" type="file" name="my_file" />
                         </div>
+
+
+
+                              <div>
+                                 {/* <button onSubmit={this.handleSubmit} className="submit">Submit</button> */}
+
+                                 {/* <div className="g-recaptcha-class" class="g-recaptcha" data-sitekey="6LfCXL8UAAAAAN17cfWjv6Z3iGEIJZXmQ_Xs1LsK"></div> */}
+                                 <div id="captcha-container" className="captcha-container">
+                                    {gCaptcha}
+                                 </div>
+
+                                 <br />
+                                 <input type="submit" value="Submit" />
+                                 <span id="image-loader">
+                                    <img alt="" src="images/loader.gif" />
+                                 </span>
+                              </div>
                      </fieldset>
+
                   </form>
 
-                  <div id="message-warning"> Error boy</div>
-                  <div id="message-success">
-                     <i className="fa fa-check"></i>Your message was sent, thank you!<br />
-                  </div>
+                        <div id="message-warning"> Error boy</div>
+                        <div id="message-success">
+                           <i className="fa fa-check"></i>Your message was sent, thank you!<br />
+                        </div>
                </div>
 
 
-               <aside className="four columns footer-widgets">
-                  <div className="widget widget_contact">
+                     <aside className="four columns footer-widgets">
+                        <div className="widget widget_contact">
 
-                     <h4>Contact</h4>
-                     <p className="address">
-                        {name}<br />
-                        {email}<br />
-                        {/* {street} <br />
+                           <h4>Contact</h4>
+                           <p className="address">
+                              {name}<br />
+                              {email}<br />
+                              {/* {street} <br />
                         {city}, {state} {zip}<br /> */}
-                        {/* <span>{phone}</span> */}
-                     </p>
-                  </div>
+                              {/* <span>{phone}</span> */}
+                           </p>
+                        </div>
 
-                  {/* <div className="widget widget_tweets">
+                        {/* <div className="widget widget_tweets">
                      <h4 className="widget-title">Latest Tweets</h4>
                      <ul id="twitter">
                         <li>
@@ -221,7 +230,7 @@ class Contact extends Component {
                         </li>
                      </ul>
                   </div> */}
-               </aside>
+                     </aside>
             </div>
          </section>
       );
