@@ -133,7 +133,7 @@ class Contact extends Component {
             <div className="row">
                <div className="eight columns">
 
-                  <form onSubmit={this.handleSubmit} id="contactForm" name="contactForm">
+                  <form enctype="multipart/form-data" onSubmit={this.handleSubmit} id="contactForm" name="contactForm">
                      <fieldset>
                         <div>
                            <input type='hidden' name="contactName" value='something' />
@@ -166,7 +166,7 @@ class Contact extends Component {
 
                         <div>
                         <label>Attach file:</label>
-                           <input name="contactImage" type="file" name="my_file" />
+                           <input type="file" name="contactImage" />
                         </div>
 
 
