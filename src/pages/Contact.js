@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
-
+import tw from "twin.macro";
+import styled from "styled-components";
+import { css } from "styled-components/macro"; //eslint-disable-line
+import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import emailjs from 'emailjs-com';
 
 const gCaptcha = <div id="googlecaptcha1" className="g-recaptcha-class" class="g-recaptcha" data-sitekey="6Lefbo0aAAAAAOObFcErCdDVm8PMb3cYmN9ALgm4"></div>
+const Container = tw.div`relative`;
+const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
+const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
+const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 h-80 md:h-auto`;
+const TextColumn = styled(Column)(props => [
+  tw`md:w-7/12 mt-16 md:mt-0`,
+  props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
+]);
 
+const Image = styled.div(props => [
+  `background-image: url("${props.imageSrc}");`,
+  tw`rounded bg-contain bg-no-repeat bg-center h-full`,
+]);
+const TextContent = tw.div`lg:py-0 text-center md:text-left`;
 
+const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
+
+const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
+const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
+const Textarea = styled(Input).attrs({as: "textarea"})`
+  ${tw`h-24`}
+`
+
+const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8 bg-green-600`;
+const submitButtonText = "Send"
 class Contact extends Component {
 
    constructor(props) {
@@ -55,14 +81,14 @@ class Contact extends Component {
       console.log(this.state);
 
       //formatting check
-      // var goodtosend = ((this.state.email.length > 0) && (this.state.subject.length > 0) && (this.state.message.length > 0))
+      var goodtosend = ((this.state.email.length > 0) && (this.state.subject.length > 0) && (this.state.message.length > 0))
 
-      // if (!goodtosend) {
-      //    alert("Please follow the requested email format!");
-      //    return;
+      if (!goodtosend) {
+         alert("Please follow the requested email format!");
+         return;
 
 
-      // }
+      }
       const msg = {
          to: "nfteeze@gmail.com",
          from: this.state.email,
@@ -112,15 +138,9 @@ class Contact extends Component {
       }
 
       return (
-         <section id="contact" style={{ backgroundColor: "red" }}>
+         <section id="contact" >
 
             <div className="row section-head">
-
-               <div className="two columns header-col">
-
-                  <h1><span>Get In Touch.</span></h1>
-
-               </div>
 
                <div className="ten columns">
 
@@ -136,70 +156,70 @@ class Contact extends Component {
                   <form enctype="multipart/form-data" onSubmit={this.handleSubmit} id="contactForm" name="contactForm">
                      <fieldset>
                         <div>
-                           <input type='hidden' name="contactName" value='something' />
+                           <Input type='hidden' name="contactName" value='something' />
                            <label htmlFor="contactName">Name <span className="required">*</span></label>
-                           <input pattern=".{3,}" value={this.state.name} type="text" size="35" id="contactName" name="contactName" onChange={(e) => {
+                           <Input pattern=".{3,}" value={this.state.name} type="text" size="35" id="contactName" name="contactName" onChange={(e) => {
                               this.handleChange(e, "name");
                            }} />
                         </div>
 
                         <div>
                            <label htmlFor="contactEmail" name="contactEmail">Email <span className="required">*</span></label>
-                           <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={this.state.email} type="email" size="35" id="contactEmail" name="contactEmail" onChange={(e) => {
+                           <Input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={this.state.email} type="email" size="35" id="contactEmail" name="contactEmail" onChange={(e) => {
                               this.handleChange(e, "email");
                            }} />
                         </div>
 
                         <div>
                            <label htmlFor="contactSubject" name="contactSubject">Subject <span className="required">*</span></label>
-                           <input pattern=".{3,}" value={this.state.value} type="text" value={this.state.subject} size="35" id="contactSubject" name="contactSubject" onChange={(e) => {
+                           <Input pattern=".{3,}" value={this.state.value} type="text" value={this.state.subject} size="35" id="contactSubject" name="contactSubject" onChange={(e) => {
                               this.handleChange(e, "subject");
                            }} />
                         </div>
 
                         <div>
                            <label htmlFor="contactMessage" name="contactMessage">Message <span className="required">*</span></label>
-                           <textarea pattern=".{3,}" value={this.state.message} cols="50" rows="15" id="contactMessage" name="contactMessage" onChange={(e) => {
+                           <Textarea pattern=".{3,}" value={this.state.message} cols="50" rows="15" id="contactMessage" name="contactMessage" onChange={(e) => {
                               this.handleChange(e, "message");
-                           }}></textarea>
+                           }}></Textarea>
                         </div>
 
                         <div>
-                        <label>Attach file:</label>
-                           <input type="file" name="contactImage" />
+                           <label>Attach file: &nbsp;</label>
+                           <Input type="file" name="contactImage" />
                         </div>
 
+                        <br />
 
+                        <div>
+                           {/* <button onSubmit={this.handleSubmit} className="submit">Submit</button> */}
 
-                              <div>
-                                 {/* <button onSubmit={this.handleSubmit} className="submit">Submit</button> */}
+                           {/* <div className="g-recaptcha-class" class="g-recaptcha" data-sitekey="6LfCXL8UAAAAAN17cfWjv6Z3iGEIJZXmQ_Xs1LsK"></div> */}
+                           <div id="captcha-container" className="captcha-container">
+                              {gCaptcha}
+                           </div>
 
-                                 {/* <div className="g-recaptcha-class" class="g-recaptcha" data-sitekey="6LfCXL8UAAAAAN17cfWjv6Z3iGEIJZXmQ_Xs1LsK"></div> */}
-                                 <div id="captcha-container" className="captcha-container">
-                                    {gCaptcha}
-                                 </div>
-
-                                 <br />
-                                 <input type="submit" value="Submit" />
-                                 <span id="image-loader">
-                                    <img alt="" src="images/loader.gif" />
-                                 </span>
-                              </div>
+                           <br />
+                           <SubmitButton type="submit" value="Submit" >{submitButtonText}</SubmitButton>
+                           <span id="image-loader">
+                              <img alt="" src="images/loader.gif" />
+                           </span>
+                        </div>
                      </fieldset>
 
                   </form>
 
-                        <div id="message-warning"> Error boy</div>
+                        {/* <div id="message-warning"> Error boy</div>
                         <div id="message-success">
                            <i className="fa fa-check"></i>Your message was sent, thank you!<br />
-                        </div>
+                        </div> */}
                </div>
 
 
                      <aside className="four columns footer-widgets">
                         <div className="widget widget_contact">
 
-                           <h4>Contact</h4>
+                           {/* <h4>Contact</h4> */}
                            <p className="address">
                               {name}<br />
                               {email}<br />

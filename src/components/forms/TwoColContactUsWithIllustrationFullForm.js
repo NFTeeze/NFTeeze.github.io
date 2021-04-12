@@ -5,7 +5,10 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import EmailIllustrationSrc from "images/email-illustration.svg";
+import emailjs from 'emailjs-com';
+import Contact from "pages/Contact";
 
+const gCaptcha = <div id="googlecaptcha1" className="g-recaptcha-class" class="g-recaptcha" data-sitekey="6Lefbo0aAAAAAOObFcErCdDVm8PMb3cYmN9ALgm4"></div>
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -31,7 +34,10 @@ const Textarea = styled(Input).attrs({as: "textarea"})`
   ${tw`h-24`}
 `
 
-const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8 bg-green-600`
+const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8 bg-green-600`;
+
+
+
 
 export default ({
   subheading = "NFTeeze",
@@ -55,13 +61,14 @@ export default ({
             {/* {subheading && <Subheading>{subheading}</Subheading>} */}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
-            <Form action={formAction} method={formMethod}>
+            {/* <Form action={formAction} method={formMethod}>
               <Input type="email" name="email" placeholder="Your Email Address" />
               <Input type="text" name="name" placeholder="Full Name" />
               <Input type="text" name="subject" placeholder="Subject" />
               <Textarea name="message" placeholder="Your Message Here" />
-              <SubmitButton type="submit">{submitButtonText}</SubmitButton>
-            </Form>
+              <SubmitButton type="submit">{submitButtonText}</SubmitButton> */}
+            {/* </Form> */}
+            <Contact></Contact>
           </TextContent>
         </TextColumn>
       </TwoColumn>
